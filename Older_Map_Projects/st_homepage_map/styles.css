@@ -1,0 +1,319 @@
+/* SCROLL BAR STYLES */
+
+/* width */
+::-webkit-scrollbar{
+    width: 5px;       
+  }
+  /* Track */
+::-webkit-scrollbar-track {
+    background: #cac9c9;
+    border-radius: 3px;    
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 3px;     
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #777;    
+}  
+
+
+/* 'remove' buttons */
+.remove-btn {
+    border: none;
+    position: relative;   
+    width: 1.5em;
+    height: 1.5em; 
+    border-radius: 100%; 
+    background-color: #ffcccb;        
+}
+.remove-btn:hover {
+    cursor: pointer;
+    background-color: #ef9a9a;    
+}
+
+
+/* SVG MAP */
+#svg-container {
+    position: absolute;
+    left: 9.7em;
+    top: 2em;        
+    height: 400px;    
+    width: 750px;   
+    overflow: hidden; 
+    border: 1px solid black;             
+    
+}
+#svg-map {
+    position: absolute;       
+    transform: scale(0.9); 
+    left: -3em;
+    top: -2em;
+    overflow: visible;            
+}  
+.svg-country .greenland {
+    transform: scale(0.7)translate(120px, 50px);
+}
+.svg-country {
+    position: absolute;                
+    fill: grey; 
+    stroke-width: 0.1vh;        
+    stroke: black;
+    z-index: 8; 
+    box-shadow: 5px 5px 5px 5px;     
+}
+.svg-country:hover {    
+    cursor: pointer;      
+}
+
+.north-america:hover {
+    opacity: 0.7;
+}
+
+
+/* country details panel */
+#country-details-container {    
+    position: absolute;
+    left: 14em;
+    top: 27.5em;
+}
+.country-details-panel {
+    position: relative;
+    width: 700px;
+    height: 17em;            
+    padding: 1em;    
+    top: 20%;    
+    background-color: transparent;    
+    border-radius: 5px 5px 5px 5px;  
+    background-color: rgba(0, 0, 0, 0.8);  
+    /* box-shadow: 0px 0px 10px black; */
+}
+.country-details.country-name{
+    color: white;   
+    position: sticky;
+    background: none;
+    width: 4em;
+    height: 1em;
+    width: 85%;
+    top: 5px;
+    border-bottom: 1px solid white;
+    margin-left: 5px;
+    margin-right: auto;       
+    padding: 5px;      
+    font-family: 'Inconsolata', monospace;        
+}
+.language-data-container {
+    position: relative;
+    width: 99%;
+    height: calc(100% - 3em);
+    top: 10px;    
+    overflow-x: hidden; 
+    overflow-y: auto;      
+}
+.country-panel-lang-data {
+    position: relative;    
+    width: 100%;
+    height: 1.5em;
+    color: white;
+    padding-left: 10px;    
+    padding-bottom: 3.75px;    
+    padding-top: 3.75px;  
+    font-family: 'Inconsolata', monospace;
+    font-size: small;
+}
+.remove-btn.remove-country {        
+    position: absolute;   
+    width: 1.7em;                     
+    height: 1.7em; 
+    right: 0em;        
+    opacity: 0.7;
+    border-radius: 1px;
+    border: 1px solid black;  
+    /* box-shadow: 0px 0px 3px black; */
+}
+
+
+
+/* LANGUAGE DATA PANEL */
+#language-data-container { 
+    top: calc(50% - 17em);
+    left: 73%;
+    width: 20em;
+    height: 30em;                  
+    border-radius: 5px;
+    position: absolute;   
+    overflow: hidden; 
+    z-index: 1;     
+    box-shadow: 0 0 10px rgb(112, 112, 112);        
+}
+#language-data-inner {       
+    width: 100%;    
+    height: 100%;    
+    position: relative;
+    background-color: lightcyan;;    
+    z-index: 2;   
+    overflow: scroll;
+}
+
+/* LANGUAGE DATA TITLES */
+.table-titles-container {
+    position: relative;
+    width: 100%;  
+    height: 1.5em; 
+    z-index: 3; 
+    box-shadow: 0 2px 3px 0px grey;    
+    background-color: #29b191;
+}
+.table-title {    
+    position: absolute;        
+    font-size: small;  
+    text-align: left;       
+    top: 0.2em;       
+}
+#language-name-title{        
+    left: 12%;
+}
+#online-presence-title {        
+    left: 43%;
+}
+#gdp-title {    
+    left: 70%;
+}
+
+
+/* LANGUAGE CHOICES IN THE LANGUAGE PANEL */
+.panel-data-row-container {
+    position: relative;    
+    height: 1.8em;                                    
+    transition: height 0.8s ease-out 0s, background-color 0.8s ease-out 0s;    
+    background-color: #efefef;        
+    top: 1px;     
+}
+.panel-data-row-container:hover {
+    height: 18em;     
+    /* border-bottom: 1px solid grey; */
+    background-color: rgb(223, 222, 222);
+    box-shadow: 0px 1px 5px 0px grey;       
+}
+.panel-data-row {
+    position: relative;    
+    height: 2.16em;                           
+    border: none; 
+    text-align: left;               
+}
+.panel-data-row:hover {
+    cursor: pointer;                 
+}
+/* language name column */
+.language-name-btn {
+    width: 40%;
+    text-align: center;
+    outline: none;
+}
+/* online presence column */
+.online-presence-btn {
+    width: 25%;
+    outline: none;
+}
+/* gdp column */
+.gdp-btn {
+    width: 25%;
+    text-align: right;
+    outline: none;  
+}
+
+/* color icon */
+.color-icon {
+    position: absolute;
+    background-color: none;
+    left: 0.5em;    
+    width: 1em;
+    height: 1em;
+    border: none;    
+}
+
+/* remove lang button */
+.remove-btn.remove-lang {    
+    left: 0.5em;                      
+}
+
+/* Language details in the language panel */
+.language-details-container {
+    height: calc(100% - 1.8em);
+    overflow: auto;
+    overflow-x: hidden;
+    visibility: hidden;
+}
+.language-details {
+    position: relative;
+    text-align: fill;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    transition: 0s;
+    cursor: default;
+    font-size: small;
+    font-family: 'Inconsolata', monospace;    
+}
+.language-details:hover {
+    box-shadow: '0px 0px 3px black';
+    box-shadow: 0px 0px 3px black;
+}
+.language-data-point {
+    position: relative;           
+    display: inline-block;
+    width: 32%;    
+    text-align: left;  
+    vertical-align: middle;       
+}
+.country-column {
+    left: 1em;
+}
+.population-column {
+    left: 2em;    
+}
+.gdp-column {
+    left: 3em;
+}
+/*
+.language-details.total-pop {
+    border-top: 1px solid grey;
+    top: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+    width: 95%;    
+}
+*/
+
+
+/* SELECTBOX */
+#language-selectbox-container {
+    display: inline-flex;  
+    position: absolute;    
+    left:1em;
+    top: 0em;      
+}
+#choices-input-btn {
+    position: relative;    
+    top: 5px;    
+    border: 1px solid #ddd;
+    border-radius: 3px;    
+    left: 0.5em; 
+    box-shadow: 0 0 2px rgb(90, 90, 90);     
+}
+#choices-input-btn:hover {
+    cursor: pointer;
+    background-color: rgb(223, 222, 222);
+}
+
+.selectbox-option {
+    background-color: whitesmoke;        
+}
+.selectbox-option:hover {
+    background-color: teal;
+}

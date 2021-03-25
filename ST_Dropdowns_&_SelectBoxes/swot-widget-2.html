@@ -1,0 +1,112 @@
+<!-- SiteTran Begin -->
+<style>
+    #sitetran_translate_element select { 
+        width: auto;
+        margin: 0;
+        color: #787878;
+        font-size: 15px;
+        padding: 5px 8px;
+        border: none;
+        background: none;
+        -moz-appearance: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        padding-right: 24px;
+    }
+      
+    #sitetran_translate_element select:focus {
+        outline: none;
+    }
+      
+    #sitetran_translate_element::after {
+        content: '';
+        background: url("https://c.sitetran.com/down-caret.svg") no-repeat 90% 50%;
+        height: 10px;
+        width: 10px;
+        display: block;
+        z-index: 4;
+        pointer-events: none;
+        position: absolute;
+        top: 52%;
+        transform: translateY(-50%);
+        right: 8px;
+    }
+    
+    body[dir="RTL"] #sitetran_translate_element select {
+        padding-right: 8px;
+        padding-left: 24px;
+    }
+    
+    body[dir="RTL"] #sitetran_translate_element::after {
+        right: auto;
+        left: 10px;
+    }
+    
+    #sitetran_translate_element:hover { 
+        background-color: #f1f3f4;
+    }
+    
+    #sitetran_translate_element { 
+        opacity: 0;        
+        background-color: white;
+        position: relative;
+        border: 1px solid #A6A6A6;
+        box-shadow: 1px 1px 3px 0 rgba(93, 93, 93, 0.1);
+        overflow: hidden;
+        border-radius: 5px;
+        transition: opacity 0.7s ease-out;        
+    }
+    
+    #sitetran_toggle { 
+        margin-right: 9px;
+        margin-left: 9px;
+    }
+    
+    #sitetran_translate_wrapper {
+        display: flex;
+        align-items: center;
+        z-index: 2147483647;                        
+    }    
+</style>
+
+<div id="sitetran_translate_wrapper">
+    <img id="sitetran_toggle" onmouseover="show_selectbox()"  onclick="sb_click_event()" src="http://c.sitetran.com/widget/icons/globe-icon.svg" width="19" height="20" />
+    <div id="sitetran_translate_element"></div>
+</div>
+
+<script>
+
+    let swot_sitetran_selectbox = document.getElementById('sitetran_translate_element');
+
+    function show_selectbox() {              
+        swot_sitetran_selectbox.style.opacity = '1';
+    }
+
+    function hide_selectbox() {
+        swot_sitetran_selectbox.style.opacity = '0';                                    
+    }
+
+    function sb_click_event() {            
+        let currOpacity = swot_sitetran_selectbox.style.opacity;
+
+        // We check if the selectbox is already visible.
+        // This is done for mobile devices on which click and hover actions set off the same event.
+        if (currOpacity && currOpacity == '0') { // not visible
+            show_selectbox();
+        }
+        else if (currOpacity && currOpacity == '1') { // visible
+            hide_selectbox();
+        }
+    }
+
+    var sitetran = {};
+    sitetran.site_id = 1709;
+    sitetran.site_default_language_code = "en";
+    sitetran.url_type = "hash"; 
+    sitetran.widget_type = "styled-select"; 
+</script>
+<script src="//c.sitetran.com/widget/v2.js"></script>
+<!-- SiteTran End -->

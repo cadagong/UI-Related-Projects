@@ -1,0 +1,59 @@
+<!-- SiteTran Begin -->
+<style>
+    #sitetran_translate_element select {
+        width: auto;     
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+    } 
+
+    #sitetran_translate_element select::-ms-expand {
+        display: none;
+    }
+  
+    #sitetran_translate_element {
+        z-index: 2147483647;           
+    }
+  
+    #sitetran_select {           
+      background-image: url("//c.sitetran.com/widget/icons/globe-icon.svg");
+      background-repeat: no-repeat;
+      background-color: transparent;
+      background-position: center;
+      background-size: 1.5vw;
+      color: transparent;
+      border: none;
+      padding: 0.4vw;
+      outline: none;           
+      cursor: pointer;   
+    }
+  
+    #sitetran_select option {
+      color: rgb(102, 102, 102);   
+    }
+  
+    #sitetran_toggle {
+        margin-right: 9px;
+        margin-left: 9px;
+    }
+  
+    #sitetran_translate_wrapper {
+      display: flex;
+      align-items: center;
+      z-index: 2147483647;
+    }
+  </style>
+  
+    <script>
+      var sitetran = {};
+      sitetran.site_id = 1709;
+      sitetran.site_default_language_code = "en";
+      sitetran.url_type = "hash";
+      sitetran.widget_type = "original-select";
+    </script>
+    <div id="sitetran_translate_wrapper">   
+      <div id="sitetran_translate_element"></div>
+    </div>
+    <script src="//c.sitetran.com/widget/v2.js"></script>
+    <!-- SiteTran End -->
