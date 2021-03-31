@@ -6475,7 +6475,7 @@ async function start_animation() {
             set_language(langOptionToSelect.getAttribute('title')); //set language            
             toggle_list(false); //open fake dropdown 
             setTimeout( () => {
-                //update_dynamic_text(); //update dynamic text
+                update_dynamic_text(); //update dynamic text
             }, 1500) 
         
         for(let j=0; j<langOptions.length; j++) {       
@@ -6496,11 +6496,10 @@ async function start_animation() {
                 await cursor.move(langOptionToSelect, 1000, 0);
                 //'click' on next language                
                 cursor.click(function() {
-                    toggle_list(true);   //close fake dropdown   
-                    update_dynamic_text(); //update dynamic text                    
+                    toggle_list(true);   //close fake dropdown                                        
                     launch_backend_animation(); //launch 'backend' animation          
                     update_fake_website(); //and update fake website                
-                    setTimeout(update_world_map, 1500); //update world map after 500ms
+                    setTimeout(update_world_map, 500); //update world map after 500ms
                     langOptions[j].style.backgroundColor = 'white'; 
                 });
                 break;
