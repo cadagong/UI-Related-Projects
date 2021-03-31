@@ -135,7 +135,7 @@ class Bar {
         let headColor = value.color || '';     
         this.outerSvgContainer.addEventListener('mouseout', function() {
             let headRect = rects[0];
-            let headRectValue = parseInt(headRect.getAttribute('value'));             
+            let headRectValue = parseInt(headRect.getAttribute('value')) || 0;             
             let totalRectValue = parseInt(totalRect.getAttribute('value'));                                   
             
             let headRectPercent = (headRectValue/totalRectValue)*100;
@@ -162,7 +162,7 @@ class Bar {
             if(barProps.totalAnimationActive != false) {
                 let headRect = rects[0];  
                 let totalRectValue = parseInt(totalRect.getAttribute('value'));
-                let headRectValue = parseInt(headRect.getAttribute('value'));           
+                let headRectValue = parseInt(headRect.getAttribute('value')) || 0;           
                 let headProgressPercent = (headRectValue/totalRectValue)*100;
                 let headProgressPercentBuffer = (headProgressPercent< 2) ? 2 - headProgressPercent : 0;
                 let totalProgressPercent = headProgressPercent + headProgressPercentBuffer;         
@@ -187,7 +187,7 @@ class Bar {
         });
         this.totalRect.addEventListener('mouseout', function() {
             let headRect = rects[0];
-            let headRectValue = parseInt(headRect.getAttribute('value'));             
+            let headRectValue = parseInt(headRect.getAttribute('value')) || 0;             
             let totalRectValue = parseInt(totalRect.getAttribute('value'));                                   
             
             let headRectPercent = (headRectValue/totalRectValue)*100;
