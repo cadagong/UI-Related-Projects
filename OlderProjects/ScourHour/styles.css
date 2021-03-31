@@ -1,0 +1,244 @@
+    #mySidenav {
+        height: 9.5vmin;
+        position: fixed; 
+        top: 1.99vmin;
+        right: 2vmin;
+        width: calc(79vw - 3.5vmin);
+        border-bottom: 1vmin solid black;
+        border-left: 1vmin solid black;        
+
+        border-radius: 0px 3vmin 0px 3vmin;
+        transition: 0.5s;            
+        background-color: lightyellow; 
+        z-index: 5;    
+      } 
+    #ceno {
+        left: calc(2.5vmin + 2vw);
+        /*border-radius: 0vmin 0vmin 3vmin 3vmin;*/
+        top: 50vh;
+        width: 15vw;
+        height: auto;
+        position: fixed;
+        /*border: 3px solid black;*/
+        transition: 0.5s;
+      
+        z-index: 300;
+    }
+
+    .mouse {
+        position: fixed;
+        width: calc(100vw - 4vmin);
+        height: calc(100vh - 4vmin);
+        margin: 1vmin;
+        border: 1vmin solid black; 
+        border-radius: 3vmin;
+        background-color: lightyellow;
+    }
+    p {
+        font-size: 4vw;
+        margin: 0;
+        display: flex;
+        position: absolute;
+    }          
+    #find {
+        opacity: 30%;
+        font-size: 13vw;
+        left: -0.5vw;
+        top: -1vw;
+    }   
+    #box {
+        position: fixed; 
+        right: 1vmin;
+        width: calc(79vw - 3.5vmin);
+        bottom: 1vmin;
+        height: calc(100vh - 14.5vmin);
+        border-radius: 3vmin 0 3vmin 0 ;
+        transition: 0.5s; 
+        z-index: 5;   
+        overflow: hidden; 
+        border: 1vmin solid black;                 
+    }
+    #waldo-emoji {
+        left: 3.5vw;
+        top: 3.5vw;
+    }
+    #magnifying-background {
+        position: absolute; 
+        background-color: whitesmoke;
+        z-index: -10; 
+        border-radius: 10vmax;
+        left: 2vw;
+        top: 2vw;
+        width: 9vw;
+        height: 9vw;
+    }
+
+    .buttons {        
+        cursor: pointer; 
+        transition: 0.1s;  
+        position: absolute;   
+        top: 0.1vmin;
+        font-size: 6.2vmin;
+        z-index: 10;
+    }
+
+    #mystery, #travel, #food, #clothes, #faces, #animals {
+        background-color: pink;
+        border-radius: 3vmin;
+        border-left: 1vmin solid black;
+        border-bottom: 1vmin solid black;
+        transition: 700ms;
+        text-align: center;
+    }
+
+    #animals {
+        left: 2%;
+    } 
+    #faces {        
+        left: 18%;                                
+    }
+    #clothes {                
+        left: 36%;                
+    }
+    #food {                
+        left: 54%;  
+        width: 8vmin;      
+    }
+    #travel {
+        left: 72%;
+    }
+    #mystery {
+        left: 90%;
+        border-top: 1vmin solid black;
+        border-right: 1vmin solid black;
+        border-left: 0;
+        border-bottom: 0;
+        width: 8vmin;           
+    }
+
+/*
+    #arrow {        
+        left: 25%; 
+        transition: 0.5s;       
+    }
+
+    #menu-btn {        
+        height: 100%;                    
+        width: 10%;
+        position: absolute;
+        top: 0%;
+        left: 90%;  
+        background-color: lightslategray;
+        border: 1vmin solid black;
+        transition: 0.5s;  
+        cursor: pointer;
+        z-index: 5;      
+    }*/
+    #meter { /* progress */
+        position: fixed;
+        left: 2.5vmin;
+        top: 40vh;
+        width: 18.5vw;
+        height: 5.6vmin;
+        background-color: lightyellow;        
+        border-radius: 1vmin;
+        border: 0.6vmin solid black;
+        transition: 0.5s;
+        z-index: 5;  
+        overflow: hidden;
+                  
+    }   
+    #progress {
+        /*display: block;        */
+        height: 100%;               
+        position: absolute;         
+        background-color: #d6185e;                      
+        width: 0%;
+        transition: 1s;
+        border-radius: 0vmin 0.3vmin 0.3vmin 0vmin;
+    }  
+    .meter3 { /* countdown */
+        position: fixed;
+        left: 17.5vw;
+        top: 2.5vh;
+        width: calc(2.5vmin + 1vw);
+        height: 35vh;
+        background-color: lightyellow;
+        border-radius: 1vmin;
+        border: 0.6vmin solid black;
+        z-index: 3;   
+        overflow: hidden;                
+    }   
+    #countdown {    
+        height: 100.0%;
+        width: 100%;    
+        bottom: 0;                    
+        position: absolute;        
+        background-color: #ecbb19;
+        transition: 1s;
+        border-radius: 0.3vmin;
+
+    /*
+        animation: progressbar 6s ease-in-out;
+        animation-duration: 30s;
+        animation-fill-mode: forwards;    
+        --height0: 0%;
+        --height100: 100%;
+    */ 
+    }     
+    
+    /*
+    @keyframes progressbar {
+        from {
+        height: var(--height100);
+        }
+        to {
+        height: var(--height0);
+        } 
+    }
+    */
+    
+    
+
+
+    .stressMeters {
+        position: fixed;        
+        bottom: 2vh;
+        width: 2.5vmin;
+        height: 35vh;
+        /*background-color: lightyellow;                        */
+        transition: 0.0s;  
+        left: 3vmin;   
+        overflow: hidden;
+        /*border-top: 2px solid lightyellow;*/
+        border-radius: 5px 5px 0px 0px;         
+    }
+
+        
+    .stress{
+        display: block;
+        height: 0%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: #4c07bb;                                
+        transition: 0.5s;
+        border-radius: 4px 4px 0px 0px;
+        border-bottom: 2px solid grey;
+    }                        
+    .container {
+        width: 5vmax;
+        height: 5vmax;
+        left: 0vmax;
+        top: 0vmax;
+    }   
+    #startBtn {
+        left: 45%;
+        bottom: 45%;
+        width: 13vmin;
+        position: absolute; 
+        border: 1vmin solid darkslategray;
+        border-radius: 10vmin;
+        cursor: pointer;      
+    }
+                                                   

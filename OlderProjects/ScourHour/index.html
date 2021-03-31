@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ScourHour</title>        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="shortcut icon" href="./images/Favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="./images/Favicon.png" type="image/png">          
+    </head>
+
+    <body style="margin: 0;">
+
+    <div class = "mouse box" id = "mousebox">
+        <a href = "http://ceno.fun"><img src="./images/ceno-logo.svg"  id="ceno"></a>
+
+        <div id="mySidenav" 	 >                        
+            <div class="buttons" id="animals" onclick="setToAnimalEmojis()">🐒</div>               
+            <div class="buttons" id="faces" onclick="setToFaceEmojis()" >😀</div>            
+            <div class="buttons" id="clothes" onclick="setToClothesEmojis()" >👕</div>
+            <div class="buttons" id="food" onclick="setToFoodEmojis()" >🍕</div>
+            <div class="buttons" id="travel" onclick="setToTravelEmojis()" >🚀</div>
+            <div class="buttons" id="mystery" onclick="setToAllEmojis()">�</div>
+ <!--            <span id="menu-btn" onmouseover="openNav()" onmouseout="closeNav()">                 
+                <div class="buttons" id="arrow">⮯</div> 
+            </span>      -->                               
+        </div>
+
+        <div>
+            
+            <div id="confetti-contain"></div>
+
+            <div class='buttons container'>    
+
+                <p id='waldo-emoji';></p>
+                <div id="magnifying-background"></div>
+                <p id='find'>🔍</p>                
+                <audio id="audio" src="sounds/ding.mp3"></audio>
+                <audio id="audio2" src="sounds/wrong.wav"></audio>
+                <audio id='trumpet' src='sounds/trumpet.mp3'></audio> 
+                <audio id='lose' src='sounds/lose.mp3'></audio> 
+
+                <div id="meter">            
+                    <span id="progress"></span>            
+                </div>
+
+                <div class="stressMeters" id='stressMeters'>
+                    <div id="meter2">                                              
+                    </div>                
+                </div>
+
+                <div class="meter3">            
+                    <span id="countdown"></span>            
+                </div>
+            </div>       
+
+            <div id="box" >
+                <img src="./images/playBtn.png" id="startBtn">
+            </div>
+        </div>  
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="confetti-js-master/dist/index.min.js"></script>
+    <script>
+        //////////////////
+//GLOBAL VARIABLES
+//////////////////
+
+let animalEmojis = ['🐩', '🐈', '🐖', '🐄', '🐎', '🐑', '🦆', '🐥', '🐓', '🦃',
+'🦉', '🐀', '🐬', '🦜', '🐒', '🐺', '🦁', '🐸', '🐍', '🦇', '🐝', '🦅',
+'🐗', '🦟', '🦗', '🦀', '🐠', '🐊', '🐅', '🐳', '🐪', '🦏', '🐐'
+];
+
+let faceEmojis = ['😀', '😁','😬', '😰', '😱', '🥵', '🥶', '😳', '🤪', '😵',
+ '😡', '😠', '🤬', '😷', '😴','🤒', '🤕', '🤢', '🤮', '🤧', '😇', '🤠', '🤡',
+'🥳', '🥴', '🥺', '🤥', '🤫', '🤭', '🧐', '🤓', '😈', '👿', '👹', '👺', '💀', 
+'👻', '👽', '🤖', '💩', '😺', '😸', '😹','😻', '😼', '😽', '🙀', '😿', '😾'
+];
+
+let clothesEmojis = ['🧥', '👚', '👕','👖', '👔', '👗', '👙', '👘', '👠', '👡', 
+'👢', '👞', '👟', '🥾', '🥿', '🧦', '🧤', '🧣', '🎩','🧢', '👒', '🎓', '👑', '👝', 
+'👛', '👜', '💼', '🎒', '👓', '🕶', '🥽', '🥼', '🌂', '🧵', '🧶'
+];
+
+let foodEmojis = ['🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🍈','🍒','🍑','🍍','🥭','🥥',
+    '🥝','🍅','🍆','🥑','🥦','🥒','🥬','🌽','🥕','🥔','🍠','🥐','🍞','🥖','🥨','🥯','🧀','🥚',
+    '🍳','🥞','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥪','🥙','🌮','🌯','🥗','🥘','🥫','🍝','🍜',
+    '🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🥮','🥠','🍢','🍡','🍧','🍨','🍦','🥧','🍰',
+    '🎂','🍮','🍭','🍬','🍫','🍿','🧂','🍩','🍪','🌰','🥜','🍯','🥛','🍼','☕️','🍵','🥤','🍶','🍺','🍻',
+    '🥂','🍷','🥃','🍸','🍹','🍾','🥄','🍴','🥣','🥡','🥢'
+];
+
+let travelEmojis = [ '🚗','🚕','🚙','🚌','🚎','🏎','🚓','🚑','🚒','🚐','🚚','🚛','🚜','🛴','🚲','🛵',
+'🏍','🚨','🚔','🚍','🚘','🚖','🚡','🚠','🚟','🚃','🚋','🚞','🚝','🚄','🚅','🚈','🚂','🚆','🚇','🚊',
+'🚉','✈️','🛫','🛬','🛩','💺','🚀','🛸','🚁','🛶','⛵️','🚤','🛳','⛴','🚢','⚓️','⛽️','🚧','🚦',
+'🚥','🚏','🗿','🗽','🗼','🏰','🏯','🎡','🎢','🎠','⛲️','🏝','🏜','🌋','🗻','🏙','🌃','🌌','🌉','🌁',    
+'🏕','⛺️','🏠','🏡','🏚','🏗','🏭','🏢','🏬','🏣','🏤','🏥','🏦','🏨','🏪','🏫','🏩','💒','🏛',
+'⛪️','🕌','🕍','🕋','🗾','🎑','🏞','🌅','🌄','🌠','🎇','🎆','🌇','🌆'
+];
+
+let emojis = animalEmojis.concat(faceEmojis.concat(clothesEmojis.concat(foodEmojis.concat(travelEmojis))));
+
+let selectedEmojis = emojis;
+
+let progressBar = document.getElementById('progress');
+let progressBarProgress = 0;
+
+let numberOfEmojis = 10; //number of emojis displayed on screen at start. increases after every finding of waldo
+
+let screenWidth = window.innerWidth;
+let screenHeight = window.innerHeight;
+
+let waldoEmojiElement = document.getElementById('waldo-emoji');
+let allElements = document.querySelector('#emoji-class');
+let box = document.getElementById("box");
+
+document.body.style.transition = '1s';
+box.style.backgroundColor = bgChange();
+
+let remainingTime = 100.01; //in percent
+
+let gameStarted = false;
+let gameWin = false;
+
+
+//global variables needed for setting stress bars stress levels
+let i = 0;
+let sum  = 1;
+let norm = 50;
+let output2stress = 1;
+///////////////////////////////////////
+//Emoji Class to create Emoji instances
+///////////////////////////////////////
+class Emoji {
+    constructor() {
+        this.emoji = getRandEmoji();
+        this.x = window.innerWidth * (randomNum(70)) * 0.01 + 'px' ;
+        this.y = window.innerHeight * (randomNum(64)) * 0.01 + 'px' ;
+        this.fontSize = randomNum(5) + 3 + 'vmax';
+        this.zIndex = '0';
+        this.className = 'emoji-class';
+        this.position = 'absolute';
+    }
+
+    //generate emoji html element
+    generate() {
+        let emojiElem = document.createElement('div');
+        emojiElem.innerHTML = this.emoji;
+        emojiElem.className = this.className;
+        emojiElem.style.left = this.x;
+        emojiElem.style.top = this.y;
+        emojiElem.style.fontSize = this.fontSize;
+        emojiElem.style.position = this.position;
+        emojiElem.style.zIndex = this.zIndex;
+        emojiElem.style.transition = '3s';
+        emojiElem.style.cursor = 'url(images/magGlassCur.cur), auto)';
+        setNonWaldo(emojiElem);        
+        box.appendChild(emojiElem);
+        return emojiElem;
+    }
+}
+
+
+///////////////////
+//Utility functions
+///////////////////
+
+//random number generator 
+function randomNum(number) {
+    return Math.floor(Math.random() * number);
+}
+
+//get random color
+function bgChange() {
+    let rndCol = 'rgb(' + randomNum(255) + ',' + randomNum(255) + ',' + randomNum(255) + ')';
+    return rndCol;
+}
+
+//return random emoji
+function getRandEmoji() {
+    let emojiCell = randomNum(selectedEmojis.length);
+    let emoji = selectedEmojis[emojiCell];
+    return emoji;
+}
+
+//releases confetti onto user screen
+function releaseConfetti() {
+    let parent = document.getElementById('box');
+    let canvas = document.createElement('canvas');
+    canvas.id = 'my-canvas';
+    parent.append(canvas);
+    
+    let gif = document.createElement('img');
+    gif.id = 'trumpetGif';
+    gif.src = './images/trumpetGif.gif';
+    gif.style.zIndex = '500';
+    gif.style.width = '40vmin';
+    gif.style.top = '32%';
+    gif.style.left = '42%';
+    gif.style.position = 'absolute';
+    parent.append(gif);
+
+    let confettiSettings = {
+        target: 'my-canvas',
+        max: 1000
+    };
+    let confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
+    //remove confetti after 6 seconds
+    setTimeout(function() {
+        canvas.remove();
+        gif.remove();
+    }, 6000);    
+}
+
+//run when user has won the game
+function win() {
+    releaseConfetti(); //user has "won", release confetti
+    remainingTime = 100;
+    let audio = document.getElementById('trumpet');
+    audio.play(); //play trumpet win sound
+    gameWin = true;
+    while (document.getElementsByClassName('emoji-class')[0]) {
+        document.getElementsByClassName('emoji-class')[0].remove();
+    }    
+    setTimeout(function() {
+        setToStartScreen();
+    }, 6000);    
+}
+
+function startTimer() {
+    let countdown = setInterval( function(){ 
+        setCountDownBar();        
+        remainingTime = remainingTime - 2;
+        //if timer runs out
+        if(remainingTime <= 0) {
+            clearInterval(countdown);
+            timerRunOut();
+        }
+        if(gameWin) {
+            clearInterval(countdown);
+        }
+    }, 1000 );
+}
+
+
+function timerRunOut() {        
+    let audio = document.getElementById("lose");
+    audio.play(); //play "wrong" sound   
+    while (document.getElementsByClassName('emoji-class')[0]) {
+        document.getElementsByClassName('emoji-class')[0].remove();
+    }   
+    let parent = document.getElementById('box');
+    let gif = document.createElement('img');
+    gif.id = 'sadGif';
+    gif.src = './images/sadGif.gif';    
+    gif.style.width = '100vmin';  
+    gif.style.top = '35%';
+    gif.style.left = '25%';           
+    gif.style.position = 'absolute';
+    parent.append(gif);
+    setTimeout(function() {
+        audio.pause();
+        audio.currentTime = 0; 
+        gif.remove(); 
+        remainingTime = 100.1; 
+        setCountDownBar();     
+        backgroundColor = bgChange();        
+        setToStartScreen();                        
+    }, 4000);
+
+}
+
+
+
+
+///////////////////
+//Setting up events
+///////////////////
+
+
+//set up events for non-waldo emojis
+function setNonWaldo(nonWaldo) {
+    //nonWaldo.style.cursor = 'pointer'
+
+    nonWaldo.onclick = function(e) {
+        setProgressBar(-10);
+
+        let audio = document.getElementById("audio2");
+        audio.play(); //play "wrong" sound
+        setTimeout(function() {
+            audio.pause();
+            audio.currentTime = 0;
+        }, 500);
+    }
+}
+
+
+//create waldo elements and set event tiggers
+function setEmojiToFind(waldoEmoji) {
+    waldoEmojiElement.textContent = waldoEmoji.emoji;
+    //emoji to click on    
+    let emojiToFind = new Emoji();
+    emojiToFind.emoji = waldoEmoji.emoji;
+    emojiToFind.zIndex = '1';
+    let elementToFind = emojiToFind.generate();          
+
+    //define onclick event when "waldo" is found
+    elementToFind.onclick = function(e) {
+    	console.log("clickedon");
+
+        if (stressBarNumber === 1) {
+        	norm = sum ; 
+        	// fifty = 50;
+        	setStressBar(50, ('stress' + stressBarNumber));  
+        	// console.log("set to 50", fifty);
+    	};   
+
+        setProgressBar(10);
+        addStressBar();
+        sum = 1; 
+        i = 0;      
+        remainingTime += 10;
+        if(remainingTime >= 100.01) {
+            remainingTime = 100.01;
+        }
+        setCountDownBar();                    
+        if (progressBar.style.width == '100%') { win(); return; }       
+        //add found "waldo" emoji back into emojis array
+        selectedEmojis.push(waldoEmoji.emoji);
+        numberOfEmojis += 10; //increase difficulty
+        box.style.backgroundColor = bgChange();
+        let audio = document.getElementById("audio");
+        audio.play(); //play "ding" sounds
+        setTimeout(function() {
+            audio.pause();
+            audio.currentTime = 0;
+        }, 1000);
+        setTimeout(function() {
+            resetPage();
+        }, 600);
+    }
+}
+
+
+
+///////////////////////////////////
+//Page reset and populate functions
+///////////////////////////////////
+
+//resets page after emoji is found
+function resetPage() {    
+    //document.body.style.backgroundColor = bgChange(); 
+       
+    while (document.getElementsByClassName('emoji-class')[0]) {
+        document.getElementsByClassName('emoji-class')[0].remove();
+    }
+    
+    populatePage(); //repopulate the page with new emojis
+}
+
+
+//populate page with random emojis
+function populatePage() {
+    //emoji under magnifying glass
+    let waldoEmoji = new Emoji();
+    setEmojiToFind(waldoEmoji);
+
+    //remove emoji to be found from emojis array
+    for (let j = 0; j < selectedEmojis.length; j++) {
+        if (waldoEmoji.emoji == selectedEmojis[j]) {
+            selectedEmojis.splice(j, 1);
+        }
+    }
+    //generate emojis from remaining emojis 
+    //not including the emoji to be
+    for (let j = 0; j < numberOfEmojis; j++) {
+        let emoji = new Emoji();
+        emoji.generate();
+    }
+}
+
+
+
+function setToStartScreen() {  
+    //remove existing stress bars
+    while (document.getElementsByClassName('stress')[0]) {
+        document.getElementsByClassName('stress')[0].remove();
+    }
+    //start bg change
+    let contBgChange = setInterval(function() {
+        box.style.transition = '3s'
+        box.style.backgroundColor = bgChange();    
+    }, 3000);      
+    progressBar.style.width = '0%';    
+    progressBarProgress = 0;            
+    document.getElementById('waldo-emoji').textContent = '';
+    gameStarted = false;    
+    box.style.cursor = 'auto';
+    distanceFromLeft = 0.5; //for stress bars
+    stressBarNumber = 1; 
+    sum = 0;   
+
+    if(gameWin) { //game was won 
+        gameWin = false;
+        let parent = document.getElementById('box');   
+        let restartBtn = document.createElement("img");
+        let nextLvlBtn = document.createElement('img');
+        
+        //restart button            
+        restartBtn.src = './images/restart.png';
+        restartBtn.id = 'restartBtn'; 
+        restartBtn.style.width = '10vmin';
+        restartBtn.style.position = 'absolute';
+        restartBtn.style.left = '43%';
+        restartBtn.style.top = '35vmin'; 
+        restartBtn.style.border = '3px solid darkslategrey';
+        restartBtn.style.borderRadius = '10vmin';       
+        restartBtn.onclick = (function(event) {
+            clearInterval(contBgChange);
+            restartBtn.remove();
+            nextLvlBtn.remove();
+            setToStartScreen();            
+        })  
+        restartBtn.onmouseover = function(event) {
+            restartBtn.style.cursor = 'pointer';
+            restartBtn.style.border = '3px solid lightgreen';
+        }
+        restartBtn.onmouseout = function(event) {
+            restartBtn.style.cursor = 'auto';
+            restartBtn.style.border = '3px solid darkslategrey';
+        }
+        parent.append(restartBtn);
+
+        //next level button        
+        nextLvlBtn.src = './images/nextLvl.png';
+        nextLvlBtn.id = 'nextLvlBtn';
+        nextLvlBtn.style.width = '10vmin';
+        nextLvlBtn.style.position = 'absolute';
+        nextLvlBtn.style.left = '51%';
+        nextLvlBtn.style.top = '35vmin';
+        nextLvlBtn.style.border = '3px solid darkslategrey';
+        nextLvlBtn.style.borderRadius = '10vmin';
+        nextLvlBtn.onmouseover = function(event) {
+            nextLvlBtn.style.cursor = 'pointer';
+            nextLvlBtn.style.border = '3px solid lightgreen';
+        }
+        nextLvlBtn.onmouseout = function(event) {
+            nextLvlBtn.style.cursor = 'auto';
+            nextLvlBtn.style.border = '3px solid darkslategrey';
+        }
+        nextLvlBtn.onclick = function(event) {
+            addStressBar();
+            clearInterval(contBgChange);
+            restartBtn.remove();
+            nextLvlBtn.remove();            
+            box.style.cursor = 'url(images/magGlassCur.cur), auto';               
+            populatePage();
+            startTimer();
+            gameStarted = true; 
+        }
+        parent.append(nextLvlBtn);        
+    } 
+    else { //game was lost
+        let parent = document.getElementById('box');       
+        let playBtn = document.createElement("img");
+        playBtn.src = './images/playBtn.png';
+        playBtn.id = 'startBtn';    
+        parent.append(playBtn);
+        numberOfEmojis = 10;
+        $('#startBtn').mouseover(function(event) {
+            let btn = document.getElementById('startBtn');
+            btn.style.border = '5px solid lightgreen'
+        })
+        $('#startBtn').mouseout(function(event) {
+            let btn = document.getElementById('startBtn');
+            btn.style.border = '5px solid darkslategrey'
+        })
+        $('#startBtn').mouseup(function(event) {
+            gameWin = false;
+            let btn = document.getElementById('startBtn');    
+            btn.remove();
+            box.style.transition = '0.5s'
+            box.style.cursor = 'url(images/magGlassCur.cur), auto';
+            clearInterval(contBgChange);    
+            populatePage();
+            startTimer();
+            addStressBar();
+            gameStarted = true;    
+        })
+    }      
+}
+
+
+
+
+////////////////////////////////
+//functions that set emoji types
+////////////////////////////////
+
+function unselectButton() {
+    $("#mystery, #travel, #food, #clothes, #faces, #animals").css("border-left", "1vmin solid black");
+    $("#mystery, #travel, #food, #clothes, #faces, #animals").css("border-bottom", "1vmin solid black");
+    $("#mystery, #travel, #food, #clothes, #faces, #animals").css("border-top", "0");
+    $("#mystery, #travel, #food, #clothes, #faces, #animals").css("border-right", "0");
+}
+function selectButton(type) {
+    $("#" + type).css("border-top", "1vmin solid black");
+    $("#" + type).css("border-right", "1vmin solid black");
+    $("#" + type).css("border-bottom", "0");
+    $("#" + type).css("border-left", "0");
+}
+
+function setToAnimalEmojis() {
+    selectedEmojis = animalEmojis;
+    unselectButton();
+    selectButton("animals");
+    if(gameStarted) {
+        resetPage();
+    }
+}
+function setToFaceEmojis() {
+    selectedEmojis = faceEmojis;
+    unselectButton();
+    selectButton("faces");
+    if(gameStarted) {
+        resetPage();
+    }
+}
+function setToClothesEmojis() {
+    selectedEmojis = clothesEmojis;
+    unselectButton();
+    selectButton("clothes");
+    if(gameStarted) {
+        resetPage();
+    }
+}
+function setToFoodEmojis() {
+    selectedEmojis = foodEmojis;
+    unselectButton();
+    selectButton("food");
+    if(gameStarted) {
+        resetPage();
+    }
+}
+function setToTravelEmojis() {
+    selectedEmojis = travelEmojis;
+    unselectButton();
+    selectButton("travel");
+    if(gameStarted) {
+        resetPage();
+    }
+}
+function setToAllEmojis() {
+    selectedEmojis = emojis;
+    unselectButton();
+    selectButton("mystery");
+    if(gameStarted) {
+        resetPage();
+    }
+}
+
+
+////////////////
+//Pull-Down Menu
+////////////////
+
+// // Set the width of the side navigation to 26%
+// function openNav() {    
+//     document.getElementById('menu-btn').style.height = '400%';                                        
+//     document.getElementById('menu-btn').style.borderRadius = '0px 0px 6px 6px'; 
+//     document.getElementById("arrow").textContent = '⮭';
+//     document.getElementById("arrow").style.top = '78%';    
+//     document.getElementById("menu-btn").onclick = closeNav;  
+// }
+  
+// //Set the width of the side navigation to 5%
+// function closeNav() {        
+//     document.getElementById("arrow").textContent = '⮯';
+//     document.getElementById("arrow").style.top = '20%';    
+//     document.getElementById('menu-btn').style.height = '100%';  
+//     document.getElementById('menu-btn').style.borderRadius = '0px 0px 6px 0px';    
+//     document.getElementById("menu-btn").onclick = openNav;                            
+// }
+
+
+
+///////////////////////////
+//Progress/Stress/etc. Bars 
+///////////////////////////
+
+//resets progress animation
+function resetAnimation(subject) {
+    subject.style.animation = 'none';
+    subject.offsetHeight; // trigger reflow 
+    subject.style.animation = null;
+}
+
+
+//updates progress bar
+function setProgressBar(num) {    
+    progressBarProgress += num; 
+    if(progressBarProgress < 0) {
+        progressBarProgress = 0;
+    }
+    progressBar.style.setProperty('width', progressBarProgress + '%');  
+
+}
+
+
+//updates stress bar
+let stressBarNumber = 0;
+function setStressBar(stress, barId) { 
+    let stressBar = document.getElementById(barId);      
+    stressBar.style.setProperty('height', (stress) +"%");    
+    // prevStress += stress;        
+}
+
+
+let distanceFromLeft = 0.5;
+//adds a new stress bar
+function addStressBar() {
+
+    stressBarNumber += 1;   
+
+    let parent = document.getElementById("stressMeters");
+    //new stress meter
+    let newBar = document.createElement("div");
+    parent.append(newBar);
+    newBar.id = 'meter21';
+    newBar.className = 'stressMeters';
+    newBar.style.left = (2.5 + distanceFromLeft) + 'vmin';
+    distanceFromLeft += 2.5;    
+
+    //set stress level element
+    parent = newBar;
+    let newStressLevel = document.createElement("span");
+    newStressLevel.id = 'stress' + stressBarNumber;
+    console.log("stressbar#", stressBarNumber, output2stress);
+    newStressLevel.className = 'stress';
+    newStressLevel.style.backgroundColor = bgChange();
+    parent.append(newStressLevel);    
+}
+
+
+function setCountDownBar() {     
+    let countdownBar = document.getElementById('countdown');     
+    resetAnimation(countdownBar);
+    countdownBar.style.setProperty('height', (remainingTime) + '%');    
+    //countdownBar.style.setProperty('animation-duration',  countdownTime + 's' );                  
+}
+
+
+
+
+////////////////
+//Mouse Tracking
+////////////////
+
+let x1 = 1;
+let y1 = 1;
+let x2 = 1;
+let y2 = 1;
+let stress = 1;
+$('html').mousemove(function (event) {                   
+    var x2 = event.clientX;
+    var y2 = event.clientY;   
+    
+    if (x2 === undefined) {
+    	x2 = x1;
+    	y2 = x2;
+    }
+    
+    sum += Math.pow ( Math.pow ( x2 - x1 , 2 ) + Math.pow ( y2 - y1 , 2 ) , 0.25 );   
+    // output2stress = 100 * ( sum / norm );
+    output2stress = 50 + ( ( sum - norm ) / norm ) * 50;
+    if (stressBarNumber === 1 || output2stress === 0 ) {
+    	output2stress = 100 * ( Math.pow( sum , 0.5) / norm );
+    	console.log("scientific answer");
+    }
+
+    //console.log(sum, output2stress);
+    if(gameStarted) {
+        console.log("stress updated bar#", stressBarNumber, output2stress);
+        setStressBar(output2stress, ('stress' + stressBarNumber)); 
+               
+    }
+    x1 = x2;
+    y1 = y2;             
+});
+
+
+/*
+sum += stress
+sum the distances, restart no new stage
+example: (variable - first sum normalized - 1/100)
+first sum = 9000
+stress level  = 90 -> onclick. normalize to 50 (new factor = 1/180)
+second sum = 5000
+ratio = n(sum)/(n1)(sum) = 5000/9000 = 5/9 -> 5/9*50 ||| (5/9)^3 / ((5/9)^2 -1)
+third sum = 11200
+ratio = 112/90 -> 112/90 * 50
+normaliz first to 50% -> output normalization factor
+normalizefor every step
+*/
+
+//when page is first loaded, background will continuously change color
+let contBgChange = setInterval(function() {
+    box.style.transition = '3s'
+    box.style.backgroundColor = bgChange();    
+}, 3000);
+
+
+
+
+
+/////////////////////
+//Start Button Events
+/////////////////////
+
+
+$('#startBtn').mouseover(function(event) {
+    let btn = document.getElementById('startBtn');
+    btn.style.border = '5px solid lightgreen'
+})
+$('#startBtn').mouseout(function(event) {
+    let btn = document.getElementById('startBtn');
+    btn.style.border = '5px solid darkslategrey'
+})
+
+
+$('#startBtn').mouseup(function(event) {
+    let btn = document.getElementById('startBtn');    
+    btn.remove();
+    box.style.transition = '0.5s'
+    box.style.cursor = 'url(images/magGlassCur.cur), auto';
+    clearInterval(contBgChange);    
+    populatePage();
+    startTimer();
+    gameStarted = true;  
+    addStressBar();  
+})
+
+
+
+    </script>
+
+    <style>
+            #mySidenav {
+        height: 9.5vmin;
+        position: fixed; 
+        top: 1.99vmin;
+        right: 2vmin;
+        width: calc(79vw - 3.5vmin);
+        border-bottom: 1vmin solid black;
+        border-left: 1vmin solid black;        
+
+        border-radius: 0px 3vmin 0px 3vmin;
+        transition: 0.5s;            
+        background-color: lightyellow; 
+        z-index: 5;    
+      } 
+    #ceno {
+        left: calc(2.5vmin + 2vw);
+        /*border-radius: 0vmin 0vmin 3vmin 3vmin;*/
+        top: 50vh;
+        width: 15vw;
+        height: auto;
+        position: fixed;
+        /*border: 3px solid black;*/
+        transition: 0.5s;
+      
+        z-index: 300;
+    }
+
+    .mouse {
+        position: fixed;
+        width: calc(100vw - 4vmin);
+        height: calc(100vh - 4vmin);
+        margin: 1vmin;
+        border: 1vmin solid black; 
+        border-radius: 3vmin;
+        background-color: lightyellow;
+    }
+    p {
+        font-size: 4vw;
+        margin: 0;
+        display: flex;
+        position: absolute;
+    }          
+    #find {
+        opacity: 30%;
+        font-size: 13vw;
+        left: -0.5vw;
+        top: -1vw;
+    }   
+    #box {
+        position: fixed; 
+        right: 1vmin;
+        width: calc(79vw - 3.5vmin);
+        bottom: 1vmin;
+        height: calc(100vh - 14.5vmin);
+        border-radius: 3vmin 0 3vmin 0 ;
+        transition: 0.5s; 
+        z-index: 5;   
+        overflow: hidden; 
+        border: 1vmin solid black;                 
+    }
+    #waldo-emoji {
+        left: 3.5vw;
+        top: 3.5vw;
+    }
+    #magnifying-background {
+        position: absolute; 
+        background-color: whitesmoke;
+        z-index: -10; 
+        border-radius: 10vmax;
+        left: 2vw;
+        top: 2vw;
+        width: 9vw;
+        height: 9vw;
+    }
+
+    .buttons {        
+        cursor: pointer; 
+        transition: 0.1s;  
+        position: absolute;   
+        top: 0.1vmin;
+        font-size: 6.2vmin;
+        z-index: 10;
+    }
+
+    #mystery, #travel, #food, #clothes, #faces, #animals {
+        background-color: pink;
+        border-radius: 3vmin;
+        border-left: 1vmin solid black;
+        border-bottom: 1vmin solid black;
+        transition: 700ms;
+        text-align: center;
+    }
+
+    #animals {
+        left: 2%;
+    } 
+    #faces {        
+        left: 18%;                                
+    }
+    #clothes {                
+        left: 36%;                
+    }
+    #food {                
+        left: 54%;  
+        width: 8vmin;      
+    }
+    #travel {
+        left: 72%;
+    }
+    #mystery {
+        left: 90%;
+        border-top: 1vmin solid black;
+        border-right: 1vmin solid black;
+        border-left: 0;
+        border-bottom: 0;
+        width: 8vmin;           
+    }
+
+/*
+    #arrow {        
+        left: 25%; 
+        transition: 0.5s;       
+    }
+
+    #menu-btn {        
+        height: 100%;                    
+        width: 10%;
+        position: absolute;
+        top: 0%;
+        left: 90%;  
+        background-color: lightslategray;
+        border: 1vmin solid black;
+        transition: 0.5s;  
+        cursor: pointer;
+        z-index: 5;      
+    }*/
+    #meter { /* progress */
+        position: fixed;
+        left: 2.5vmin;
+        top: 40vh;
+        width: 18.5vw;
+        height: 5.6vmin;
+        background-color: lightyellow;        
+        border-radius: 1vmin;
+        border: 0.6vmin solid black;
+        transition: 0.5s;
+        z-index: 5;  
+        overflow: hidden;
+                  
+    }   
+    #progress {
+        /*display: block;        */
+        height: 100%;               
+        position: absolute;         
+        background-color: #d6185e;                      
+        width: 0%;
+        transition: 1s;
+        border-radius: 0vmin 0.3vmin 0.3vmin 0vmin;
+    }  
+    .meter3 { /* countdown */
+        position: fixed;
+        left: 17.5vw;
+        top: 2.5vh;
+        width: calc(2.5vmin + 1vw);
+        height: 35vh;
+        background-color: lightyellow;
+        border-radius: 1vmin;
+        border: 0.6vmin solid black;
+        z-index: 3;   
+        overflow: hidden;                
+    }   
+    #countdown {    
+        height: 100.0%;
+        width: 100%;    
+        bottom: 0;                    
+        position: absolute;        
+        background-color: #ecbb19;
+        transition: 1s;
+        border-radius: 0.3vmin;
+
+    /*
+        animation: progressbar 6s ease-in-out;
+        animation-duration: 30s;
+        animation-fill-mode: forwards;    
+        --height0: 0%;
+        --height100: 100%;
+    */ 
+    }     
+    
+    /*
+    @keyframes progressbar {
+        from {
+        height: var(--height100);
+        }
+        to {
+        height: var(--height0);
+        } 
+    }
+    */
+    
+    
+
+
+    .stressMeters {
+        position: fixed;        
+        bottom: 2vh;
+        width: 2.5vmin;
+        height: 35vh;
+        /*background-color: lightyellow;                        */
+        transition: 0.0s;  
+        left: 3vmin;   
+        overflow: hidden;
+        /*border-top: 2px solid lightyellow;*/
+        border-radius: 5px 5px 0px 0px;         
+    }
+
+        
+    .stress{
+        display: block;
+        height: 0%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: #4c07bb;                                
+        transition: 0.5s;
+        border-radius: 4px 4px 0px 0px;
+        border-bottom: 2px solid grey;
+    }                        
+    .container {
+        width: 5vmax;
+        height: 5vmax;
+        left: 0vmax;
+        top: 0vmax;
+    }   
+    #startBtn {
+        left: 45%;
+        bottom: 45%;
+        width: 13vmin;
+        position: absolute; 
+        border: 1vmin solid darkslategray;
+        border-radius: 10vmin;
+        cursor: pointer;      
+    }
+                                                   
+    </style>
+    </body>
+</html>
