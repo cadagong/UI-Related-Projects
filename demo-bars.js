@@ -70,8 +70,6 @@ const bar9 = new Bar(element, {
     totalAnimationActive: false
 })
 
-const bar10 = new Bar(element)
-
 
 let your = 100;
 let other = 150;
