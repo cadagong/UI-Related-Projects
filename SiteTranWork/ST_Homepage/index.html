@@ -6154,8 +6154,8 @@ for (let i=0; i<svg_countries.length; i++) {
 svg_circles.sort(function(circle1, circle2) {
     return (circle1.getBBox().x + circle1.getBBox().y) - (circle2.getBBox().x + circle2.getBBox().y);
 }) 
-console.log(svg_circles);
-console.log(svg_circles[0].parentNode);
+//console.log(svg_circles);
+//console.log(svg_circles[0].parentNode);
 
 //console.log(Date.now());
 for(let i=0; i<6000; i++) {
@@ -6290,7 +6290,7 @@ function highlight_countries(svgCircles) {
 
 //USE THIS VERSION OF THE FUNCTION ONCE WE FINISH IMPLEMENTING LANGUAGE PERCENTAGES
 function highlight_countries(svgCircles) {     
-    console.log('5');
+    //console.log('5');
     let circlesArray = svgCircles;                   
     //in order to ensure that the map animation for each language takes the same
     //amount of time, the amount which the delay time is incremented by is dependant 
@@ -6307,7 +6307,7 @@ function highlight_countries(svgCircles) {
         delay = (i * delayPerCircle);
         svgCircle.style.animation = `highlightDot 0.5s ease-in-out ${delay + delayCoef}ms forwards`;  
     }  
-    console.log('6');      
+    //console.log('6');      
 }
 
 
